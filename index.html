@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Teste Supabase</title>
+  </head>
+  <body>
+    <h1>Projeto teste</h1>
+
+    <button onclick="criar()">Criar</button>
+    <button onclick="listar()">Listar</button>
+
+    <pre id="resultado"></pre>
+
+    <script type="module">
+      import "./supabase.js";
+
+      window.criar = async function () {
+        alert("clicou em criar");
+
+        const { data, error } = await window.supabase
+          .from("teste")
+          .insert([{ cpf: 10983573455, nome: "Gustavo" }])
+          .select();
+
+        document.getElementById("resultado").textContent = error
+          ? error.message
+          : JSON.stringify(data, null, 2);
+      };
+
+      window.listar = async function () {
+        alert("clicou em listar");
+
+        const { data, error } = await window.supabase.from("teste").select("*");
+
+        document.getElementById("resultado").textContent = error
+          ? error.message
+          : JSON.stringify(data, null, 2);
+      };
+    </script>
+  </body>
+</html>
